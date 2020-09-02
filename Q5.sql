@@ -3,8 +3,8 @@
 -- Do the same for home runs per game. Do you see any trends? Avg_strikeouts number has been inceasing each year, 
 -- whereas the avg_homeruns number has not changed a lot over the years.
 
-/*select yearid/10*10 as decade, round(sum(so)/sum(g),2) as strikeouts
-/*case when yearid >=1920 and yearid <=1929 then '1920s' 
+select round(sum(so)::numeric/(sum(g)/2),2) as strikeouts,
+case when yearid >=1920 and yearid <=1929 then '1920s' 
 	 when yearid between 1930 and 1939 then '1930s' 
 	 when yearid between 1940 and 1949 then '1940s' 
 	 when yearid between 1950 and 1959 then '1950s' 
@@ -14,11 +14,11 @@
 	 when yearid between 1990 and 1999 then '1990s' 
 	 when yearid between 2000 and 2009 then '2000s' 
 	 when yearid between 2010 and 2016 then '2010s' 
-	 ELSE 'Other' end as decade*/
+	 ELSE 'Other' end as decade
 from teams
 where yearid between 1920 and 2017
 group by decade
-order by decade desc*/
+order by decade desc
 
 with games as (select year, sum(games) as games
 from homegames
